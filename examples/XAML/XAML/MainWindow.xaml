@@ -35,11 +35,11 @@
         <ListBox Grid.Row="1" Background="{x:Null}">
             <!-- Вложенные элементы - произвольные типы -->
             <!-- Но наследники от UIElement отображаются как есть, а у остальных просто для отображения вызывается метод ToString() -->
-            <local:Complex Re="27" Im="78"/>
+            <!--<local:Complex Re="27" Im="78"/>-->
             <CheckBox Content="Red"/>
             <CheckBox>Green</CheckBox>
             <CheckBox>Blue</CheckBox>
-            <local:Complex Re="5" Im="4"/>
+            <!--<local:Complex Re="5" Im="4"/>-->
         </ListBox>
         <!-- Атрибут Click задает подписку на событие Click. Указывает на метод, который будет вызван при генерации события Click кнопкой -->
         <Button Grid.Row="0" 
