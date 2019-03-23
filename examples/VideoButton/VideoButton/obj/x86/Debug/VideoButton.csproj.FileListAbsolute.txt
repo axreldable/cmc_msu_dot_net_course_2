@@ -1,0 +1,15 @@
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\bin\Debug\Bear.wmv
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\bin\Debug\VideoButton.exe
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\bin\Debug\VideoButton.pdb
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.csprojAssemblyReference.cache
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\MainWindow.baml
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\MainWindow.g.cs
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\App.g.cs
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton_Content.g.cs
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton_MarkupCompile.cache
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.g.resources
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.Properties.Resources.resources
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.csproj.GenerateResource.cache
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.csproj.CoreCompileInputs.cache
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.exe
+\\Mac\Home\Desktop\msu\dot_net\examples\VideoButton\VideoButton\obj\x86\Debug\VideoButton.pdb
