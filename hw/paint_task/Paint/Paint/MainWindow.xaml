@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Paint"
         mc:Ignorable="d"
-        Title="Paint wpf hw_19" Height="450" Width="800"  MinHeight="250" MinWidth="300">
+        Title="Paint wpf hw_19" Height="450" Width="800"  MinHeight="260" MinWidth="310">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,7 +23,7 @@
         <Label Grid.Row="2" Grid.Column="0" Background="Ivory" FontWeight="Bold">Заливка</Label>
 
         <ToolBar Name="Figures" Grid.Row="0" Grid.Column="1" Background="Ivory">
-            <RadioButton Name="Circle" Click="Circle_OnClick">
+            <RadioButton Name="Circle" Click="Circle_OnClick" IsChecked="True">
                 <Ellipse Fill="Black" Height="15" Width="15"/>
             </RadioButton>
             <RadioButton Name="Ellipse" Click="Ellipse_OnClick">

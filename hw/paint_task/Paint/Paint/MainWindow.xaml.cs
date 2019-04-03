@@ -23,6 +23,9 @@ namespace Paint
         private Shape CurrentShape { get; set; }
         List<Pair> Coordinates = new List<Pair>();
 
+        private const Int32 ConstStrokeThickness = 2;
+        private const double ConstRectangleRadius = 15;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +44,9 @@ namespace Paint
 
             FillColors.ItemsSource = brushes;
             BorderColors.ItemsSource = brushes;
+
+            FillColors.SelectedIndex = 0;
+            BorderColors.SelectedIndex = 0;
         }
 
         private void Circle_OnClick(object sender, RoutedEventArgs e)
@@ -87,20 +93,31 @@ namespace Paint
             if (CurrentShape != Shape.Triangle && Coordinates.Count == 2)
             {
                 DrawShape();
+                Coordinates.Clear();
             }
             else if (Coordinates.Count == 3)
             {
-                DrawRectangle();
-            }
-            else
-            {
-                throw new Exception("Internal error type1!");
+                DrawTriangle(
+                    Coordinates[0].X, Coordinates[0].Y,
+                    Coordinates[1].X, Coordinates[1].Y,
+                    Coordinates[2].X, Coordinates[2].Y);
+                Coordinates.Clear();
             }
         }
 
-        private void DrawRectangle()
+        private void DrawTriangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
-            throw new NotImplementedException();
+            Polygon triangle = new Polygon()
+            {
+                Fill = (SolidColorBrush) FillColors.SelectedItem,
+                Stroke = (SolidColorBrush) BorderColors.SelectedItem,
+                StrokeThickness = ConstStrokeThickness
+            };
+            triangle.Points.Add(new Point(x1, y1));
+            triangle.Points.Add(new Point(x2, y2));
+            triangle.Points.Add(new Point(x3, y3));
+
+            Canvas.Children.Add(triangle);
         }
 
         private void DrawShape()
@@ -108,37 +125,82 @@ namespace Paint
             switch (CurrentShape)
             {
                 case Shape.Circle:
-                {
-                    break;
-                }
+                    {
+                        DrawCircle(Coordinates[0].X, Coordinates[0].Y, Coordinates[1].X, Coordinates[1].Y);
+                        break;
+                    }
                 case Shape.Ellipse:
-                {
-                    break;
-                }
+                    {
+                        DrawEllipse(Coordinates[0].X, Coordinates[0].Y, Coordinates[1].X, Coordinates[1].Y);
+                        break;
+                    }
                 case Shape.Line:
-                {
-                    DrawLine(
-                        Coordinates[0].X,
-                        Coordinates[0].Y,
-                        Coordinates[1].X,
-                        Coordinates[1].Y
-                        );
-                    break;
-                }
+                    {
+                        DrawLine(Coordinates[0].X, Coordinates[0].Y, Coordinates[1].X, Coordinates[1].Y);
+                        break;
+                    }
                 case Shape.Rectangle:
-                {
-                    break;
-                }
+                    {
+                        DrawRectangle(Coordinates[0].X, Coordinates[0].Y, Coordinates[1].X, Coordinates[1].Y);
+                        break;
+                    }
                 case Shape.RectangleCircle:
-                {
-                    break;
-                }
+                    {
+                        DrawRectangleCircle(Coordinates[0].X, Coordinates[0].Y, Coordinates[1].X, Coordinates[1].Y);
+                        break;
+                    }
                 case Shape.Triangle:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
-            Coordinates.Clear();
+        }
+
+        private void DrawRectangleCircle(double x1, double y1, double x2, double y2)
+        {
+            Rectangle rectangle = new Rectangle()
+            {
+                Height = Math.Abs(y1 - y2),
+                Width = Math.Abs(x1 - x2),
+                RadiusX = ConstRectangleRadius,
+                RadiusY = ConstRectangleRadius,
+                Fill = (SolidColorBrush)FillColors.SelectedItem,
+                StrokeThickness = ConstStrokeThickness,
+                Stroke = (SolidColorBrush)BorderColors.SelectedItem
+            };
+            Canvas.SetLeft(rectangle, Math.Min(x1, x2));
+            Canvas.SetTop(rectangle, Math.Min(y1, y2));
+            Canvas.Children.Add(rectangle);
+        }
+
+        private void DrawEllipse(double x1, double y1, double x2, double y2)
+        {
+            Ellipse ellipse = new Ellipse
+            {
+                Width = Math.Abs(x1 - x2),
+                Height = Math.Abs(y1 - y2),
+                Fill = (SolidColorBrush)FillColors.SelectedItem,
+                Stroke = (SolidColorBrush)BorderColors.SelectedItem,
+                StrokeThickness = ConstStrokeThickness
+            };
+            Canvas.SetLeft(ellipse, Math.Min(x1, x2));
+            Canvas.SetTop(ellipse, Math.Min(y1, y2));
+            Canvas.Children.Add(ellipse);
+        }
+
+        private void DrawCircle(double x1, double y1, double x2, double y2)
+        {
+            Ellipse circle = new Ellipse
+            {
+                Width = Math.Abs(x1 - x2),
+                Height = Math.Abs(x1 - x2),
+                Fill = (SolidColorBrush)FillColors.SelectedItem,
+                Stroke = (SolidColorBrush)BorderColors.SelectedItem,
+                StrokeThickness = ConstStrokeThickness
+            };
+            Canvas.SetLeft(circle, Math.Min(x1, x2));
+            Canvas.SetTop(circle, Math.Min(y1, y2));
+            Canvas.Children.Add(circle);
         }
 
         private void DrawLine(double x1, double y1, double x2, double y2)
@@ -150,10 +212,25 @@ namespace Paint
                 X2 = x2,
                 Y2 = y2,
                 Fill = (SolidColorBrush)FillColors.SelectedItem,
-                StrokeThickness = 2,
+                StrokeThickness = ConstStrokeThickness,
                 Stroke = (SolidColorBrush)BorderColors.SelectedItem
             };
             Canvas.Children.Add(line);
+        }
+
+        private void DrawRectangle(double x1, double y1, double x2, double y2)
+        {
+            Rectangle rectangle = new Rectangle()
+            {
+                Height = Math.Abs(y1 - y2),
+                Width = Math.Abs(x1 - x2),
+                Fill = (SolidColorBrush)FillColors.SelectedItem,
+                StrokeThickness = ConstStrokeThickness,
+                Stroke = (SolidColorBrush)BorderColors.SelectedItem
+            };
+            Canvas.SetLeft(rectangle, Math.Min(x1, x2));
+            Canvas.SetTop(rectangle, Math.Min(y1, y2));
+            Canvas.Children.Add(rectangle);
         }
     }
 
