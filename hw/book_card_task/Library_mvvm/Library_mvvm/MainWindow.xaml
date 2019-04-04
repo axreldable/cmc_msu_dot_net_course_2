@@ -52,11 +52,9 @@
                 <TextBlock Margin="5" Foreground="Red"/>
             </StackPanel>
 
-            <TextBox Grid.Column="1" Grid.Row="1" Margin="5"/>
-
-            <TextBox Grid.Column="1" Grid.Row="3" Margin="5"/>
-
-            <TextBox Grid.Column="1" Grid.Row="9" Margin="5"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="9" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Stretch">
                 <Button Content="Добавить" Margin="5"/>
@@ -70,7 +68,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Right">
                 <Button Content="Добавить автора" Margin="5"/>
-                <Button Content="Удалить автора" Margin="5"/>
+                <Button Content="Удалить автора" Margin="5" Command="{Binding Path=SaveCommand}"/>
             </StackPanel>
 
         </Grid>

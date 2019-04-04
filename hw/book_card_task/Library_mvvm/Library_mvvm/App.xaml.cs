@@ -5,13 +5,22 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Library_mvvm.DAL;
+using Library_mvvm.Models;
+using Library_mvvm.ViewModels;
 
 namespace Library_mvvm
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            IBookProvider provider = new BookProvider();
+            BookModel model = new BookModel(provider);
+            BookViewModel viewModel = new BookViewModel(model);
+            MainWindow window = new MainWindow { DataContext = viewModel };
+        }
     }
 }
