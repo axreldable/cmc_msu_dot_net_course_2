@@ -21,6 +21,8 @@ namespace Library_mvvm
             BookModel model = new BookModel(provider);
             BookViewModel viewModel = new BookViewModel(model);
             MainWindow window = new MainWindow { DataContext = viewModel };
+
+            window.Show();
         }
     }
 }

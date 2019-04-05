@@ -9,7 +9,7 @@ using Library_mvvm.Annotations;
 
 namespace Library_mvvm.DAL
 {
-    class Book : INotifyPropertyChanged
+    public class Book : INotifyPropertyChanged
     {
         private const string InitName = "Название книги";
         private const string InitAuthor = "Имя автора";
@@ -71,6 +71,11 @@ namespace Library_mvvm.DAL
         protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

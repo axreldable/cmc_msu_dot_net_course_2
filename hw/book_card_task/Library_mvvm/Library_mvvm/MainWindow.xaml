@@ -4,19 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library_mvvm"
+        xmlns:viewModels="clr-namespace:Library_mvvm.ViewModels"
+        xmlns:converters="clr-namespace:Library_mvvm.Views.Converters"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:BookViewModel}"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <converters:YearToNoveltyConverter x:Key="yearToNoveltyConverter" />
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock= "Top">
             <MenuItem Header="_Файл">
-                <MenuItem Header="_Загрузить"/>
-                <MenuItem Header="_Сохранить"/>
+                <MenuItem Header="_Загрузить" Command="{Binding LoadCommand}"/>
+                <MenuItem Header="_Сохранить" Command="{Binding SaveCommand}"/>
                 <Separator/>
-                <MenuItem Header="_Выход"/>
+                <MenuItem Header="_Выход" Command="{Binding ExitCommand}"/>
             </MenuItem>
             <MenuItem Header="Правка">
-                <MenuItem Header="_Добавить"/>
-                <MenuItem Header="_Удалить"/>
+                <MenuItem Header="_Добавить" Command="{Binding Path=AddCommand}"/>
+                <MenuItem Header="_Удалить" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=BooksList, Path=SelectedItem }"/>
             </MenuItem>
         </Menu>
 
@@ -42,33 +48,41 @@
 
             <TextBlock Text="Список книг" Margin="5"/>
 
-            <ListBox Grid.Row="1" Grid.RowSpan="10" Grid.Column="0" Margin="5" Name="BooksList"/>
+            <ListView Name="BooksList" Grid.Row="1" Grid.RowSpan="10" Grid.Column="0" 
+                      ItemsSource="{Binding Path=Books}" SelectedItem="{Binding SelectedBook}" IsSynchronizedWithCurrentItem="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                        <GridViewColumn Header="Year" DisplayMemberBinding="{Binding Path=Year}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Margin="5"/>
             <TextBlock Grid.Column="1" Grid.Row="2" Text="Авторы" Margin="5"/>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="8">
                 <TextBlock Text="Год издания" Margin="5"/>
-                <TextBlock Margin="5" Foreground="Red"/>
+                <TextBlock Margin="5" Foreground="Red" Text="{Binding Path=SelectedBook.Year, Converter={StaticResource yearToNoveltyConverter}}"/>
             </StackPanel>
 
             <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
-            <TextBox Grid.Column="1" Grid.Row="9" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=SelectedBook.Author}"/>
+            <TextBox Grid.Column="1" Grid.Row="9" Margin="5" Text="{Binding Path=SelectedBook.Year}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Stretch">
-                <Button Content="Добавить" Margin="5"/>
-                <Button Content="Удалить" Margin="5"/>
+                <Button Content="Добавить" Margin="5" Command="{Binding Path=AddCommand}"/>
+                <Button Content="Удалить" Margin="5" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=BooksList, Path=SelectedItem }"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Content="Загрузить" Margin="5"/>
-                <Button Content="Сохранить" Margin="5"/>
+                <Button Content="Загрузить" Margin="5" Command="{Binding LoadCommand}"/>
+                <Button Content="Сохранить" Margin="5" Command="{Binding SaveCommand}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Right">
                 <Button Content="Добавить автора" Margin="5"/>
-                <Button Content="Удалить автора" Margin="5" Command="{Binding Path=SaveCommand}"/>
+                <Button Content="Удалить автора" Margin="5"/>
             </StackPanel>
 
         </Grid>

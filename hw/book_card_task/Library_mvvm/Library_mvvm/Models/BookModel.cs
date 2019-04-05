@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace Library_mvvm.Models
     class BookModel
     {
         private readonly IBookProvider _bookProvider;
-        private const string DefaultDataFilePath = "Books_List.xml";
+
+        private const string FileName = "Books_List.xml";
+        private readonly string _defaultDataFilePath = Path.Combine(Environment.CurrentDirectory, FileName);
 
         public BookModel(IBookProvider bookProvider)
         {
@@ -20,7 +23,7 @@ namespace Library_mvvm.Models
         public Book[] Books { get; set; }
         public void LoadBooks()
         {
-            LoadBooks(DefaultDataFilePath);
+            LoadBooks(_defaultDataFilePath);
         }
 
         public void LoadBooks(string path)
@@ -30,7 +33,7 @@ namespace Library_mvvm.Models
 
         public void Save()
         {
-            _bookProvider.SaveBooks(DefaultDataFilePath, Books);
+            _bookProvider.SaveBooks(_defaultDataFilePath, Books);
         }
 
         public void Save(string path)
