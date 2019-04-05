@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,20 +17,23 @@ namespace Library_mvvm.DAL
         private const Int32 InitYear = 2000;
 
         private string _name;
-        private string _author;
+        private ObservableCollection<Author> _authors;
         private int _year;
 
         public Book()
         {
             Name = InitName;
-            Author = InitAuthor;
+            Authors = new ObservableCollection<Author>();
             Year = InitYear;
         }
 
         public Book(string name, string author, int year)
         {
             Name = name;
-            Author = author;
+            Authors = new ObservableCollection<Author>()
+            {
+                new Author()
+            };
             Year = year;
         }
 
@@ -44,14 +48,33 @@ namespace Library_mvvm.DAL
             }
         }
 
-        public string Author
+        public ObservableCollection<Author> Authors
         {
-            get { return _author; }
+            get { return _authors; }
             set
             {
-                _author = value;
-                RaisePropertyChanged();
+                if (_authors != value)
+                {
+                    _authors = value;
+                    RaisePropertyChanged();
+                }
             }
+        }
+
+        public void AddAuthor(Author nameAuthor)
+        {
+            if (Authors == null)
+            {
+                Authors = new ObservableCollection<Author>();
+            }
+            Authors.Add(nameAuthor);
+            RaisePropertyChanged();
+        }
+
+        public void DellAuthor(Author nameAuthor)
+        {
+            Authors.Remove(nameAuthor);
+            RaisePropertyChanged();
         }
 
         public int Year

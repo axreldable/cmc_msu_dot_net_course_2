@@ -60,6 +60,22 @@
 
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Название" Margin="5"/>
             <TextBlock Grid.Column="1" Grid.Row="2" Text="Авторы" Margin="5"/>
+            <DataGrid Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" 
+                      Margin="3" 
+                      Name="AuthorList" 
+                      SelectionMode="Single"
+                      ItemsSource="{Binding ElementName=BooksList, Path=SelectedItem.Authors}"
+                      SelectedItem="{Binding Path=SelectedAuthor, Mode=TwoWay}"
+                      HeadersVisibility="None"
+                      AutoGenerateColumns="False"
+                      Background="White"
+                      HorizontalGridLinesBrush="White"
+                      VerticalGridLinesBrush="White"
+                      CanUserDeleteRows="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="8">
                 <TextBlock Text="Год издания" Margin="5"/>
@@ -67,7 +83,7 @@
             </StackPanel>
 
             <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=SelectedBook.Name}"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=SelectedBook.Author}"/>
+            <!--<TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=SelectedBook.Author}"/>-->
             <TextBox Grid.Column="1" Grid.Row="9" Margin="5" Text="{Binding Path=SelectedBook.Year}"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="0" HorizontalAlignment="Stretch">
@@ -81,8 +97,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Content="Добавить автора" Margin="5"/>
-                <Button Content="Удалить автора" Margin="5"/>
+                <Button Content="Добавить автора" Margin="5" Command="{Binding Path=AddAuthorCommand}"/>
+                <Button Content="Удалить автора" Margin="5" Command="{Binding Path=DeleteAuthorCommand}" CommandParameter="{Binding ElementName=AuthorList, Path=SelectedItem}"/>
             </StackPanel>
 
         </Grid>

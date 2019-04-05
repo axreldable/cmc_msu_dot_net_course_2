@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAL\Author.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="Views\Converters\YearToNoveltyConverter.cs" />
     <Page Include="MainWindow.xaml">

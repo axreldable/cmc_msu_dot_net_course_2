@@ -19,6 +19,7 @@ namespace Library_mvvm.ViewModels
         private readonly BookModel _bookModel;
         private ObservableCollection<Book> _books;
         private Book _selectedBook;
+        private Author _selectedAuthor;
 
         public BookViewModel(BookModel bookModel)
         {
@@ -26,9 +27,11 @@ namespace Library_mvvm.ViewModels
 
             LoadCommand = new RelayCommand(_ => Load());
             SaveCommand = new RelayCommand(_ => Save(), _ => CanSave());
-            AddCommand = new RelayCommand(_ => Add(), _ => Books != null);
+            AddCommand = new RelayCommand(_ => Add());
             DeleteCommand = new RelayCommand(emp => Delete(emp as Book), emp => emp is Book);
             ExitCommand = new RelayCommand(_ => Application.Current.Shutdown());
+            AddAuthorCommand = new RelayCommand(o => AuthorAdd(), o => CanAuthorAdd());
+            DeleteAuthorCommand = new RelayCommand(SelectedAuthorDelete, CanAuthorDelete);
         }
 
         public RelayCommand LoadCommand { get; }
@@ -36,6 +39,8 @@ namespace Library_mvvm.ViewModels
         public RelayCommand AddCommand { get; }
         public RelayCommand DeleteCommand { get; }
         public RelayCommand ExitCommand { get; }
+        public RelayCommand AddAuthorCommand { get; }
+        public RelayCommand DeleteAuthorCommand { get; }
 
         public ObservableCollection<Book> Books
         {
@@ -55,6 +60,19 @@ namespace Library_mvvm.ViewModels
                 if (value != _selectedBook)
                 {
                     _selectedBook = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+   
+        public Author SelectedAuthor
+        {
+            get { return _selectedAuthor; }
+            set
+            {
+                if (_selectedAuthor != value)
+                {
+                    _selectedAuthor = value;
                     RaisePropertyChanged();
                 }
             }
@@ -79,6 +97,10 @@ namespace Library_mvvm.ViewModels
 
         public void Add()
         {
+            if (Books == null)
+            {
+                Books = new ObservableCollection<Book>();
+            }
             Book book = new Book();
             Books.Add(book);
             SelectedBook = book;
@@ -88,6 +110,28 @@ namespace Library_mvvm.ViewModels
         {
             if (book == null) return;
             Books.Remove(book);
+        }
+
+        private bool CanAuthorAdd()
+        {
+            return SelectedBook != null;
+        }
+
+        private void AuthorAdd()
+        {
+            Author author = new Author();
+            SelectedBook.AddAuthor(author);
+            SelectedAuthor = author;
+        }
+
+        private bool CanAuthorDelete(object selectedItem)
+        {
+            return selectedItem != null && selectedItem is Author;
+        }
+
+        private void SelectedAuthorDelete(object selectedItem)
+        {
+            SelectedBook.DellAuthor((Author)selectedItem);
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
